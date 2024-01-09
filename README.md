@@ -50,7 +50,7 @@ Final Score:
 	python3 play.py [0 | 1]
 		- 0 
 		  Bot goes first
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))		- 1
+                - 1
 		  Player goes first
 		- Blank
 		  Who goes first is randomly chosen
