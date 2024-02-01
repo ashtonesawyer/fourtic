@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
 import sys
+from itertools import chain
 
 class Board():
 	def __init__(self, file=None, b=None):
@@ -52,7 +53,12 @@ class Board():
 				for char in range(4):
 					chars.append(row[char])
 				board.append(chars)
+		print(board)
 		return board
+
+	def stringify(self):
+		flatten = list(chain.from_iterable(self.board))
+		return ''.join(str(t) for t in flatten)
 
 	def score(self, player):
 		score = 0

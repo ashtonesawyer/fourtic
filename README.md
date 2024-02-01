@@ -21,10 +21,19 @@ I referenced [Wikipedia](https://en.wikipedia.org/wiki/Negamax)
 some for their algorithm descriptions. Even
 the longest puzzles take less than .3 seconds to complete. 
 
-### Files
+### Negamax and Playing
 `fourtic.py` has the main negamax algorithm and `play.py` is so that a human can play against
 the computer. When playing a human, the negamax has depth 4 until the 4th round when it switches
-to a full search.
+to a full search. 
+
+### Solving - unfinished
+`solve.py` uses retrograde analysis to strongly solve fourtic. The turn table is represented
+by a sqlite3 database in `states.db`. The `solution` table in this database stores the 
+board state, the score where `score = scoreX - scoreO`, and (where applicable) the best move
+to be played. In its current state is runs slowly and generates an incorrect answer, though it 
+does get through all of the states. Rather than using the database, it currently dumps the output
+into a JSON file for faster storage.
+
 
 ### Example Game
 ```
@@ -40,20 +49,18 @@ Final Score:
 
 
 ## Use
-### Negamax
 ```
-	python3 fourtic.py <file>
-```
+	python3 fourtic.py <file>  -- negamax
 
-### Playing
-```
-	python3 play.py [0 | 1]
+	python3 play.py [0 | 1]    -- playing
 		- 0 
 		  Bot goes first
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))		- 1
+		- 1
 		  Player goes first
 		- Blank
 		  Who goes first is randomly chosen
+
+	python3 solve.py           -- solving
 ```
 
 ## Testing
