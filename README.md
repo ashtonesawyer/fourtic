@@ -55,6 +55,7 @@ Final Score:
 	python3 play.py [0 | 1]    -- playing
 		- 0 
 		  Bot goes first
+
 		- 1
 		  Player goes first
 		- Blank
