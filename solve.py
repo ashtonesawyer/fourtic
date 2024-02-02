@@ -74,9 +74,10 @@ def getMoves(board, player):
 def retrograde(board, player, move, score, cnt=None):
 	'''Perform a full retrograde analysis
 
-	:param board 
-	:param player The current player
-	:param move The move that the state came from
+	:param board: Board() object
+	:param player: The current player
+	:param move: The move that the state came from
+	:param cnt: Depth
 	'''
 	rep = board.stringify()
 	
@@ -87,12 +88,12 @@ def retrograde(board, player, move, score, cnt=None):
 	if rep in ttable:
 		(m, s) = ttable[rep]
 		if player == 'O':
-			if score < s:
+			if score > s:
 				ttable[rep] = (move, score)
 			else:
 				return
 		else:
-			if score > s:
+			if score < s:
 				ttable[rep] = (move, score)
 			else:
 				return
@@ -116,13 +117,14 @@ def retrograde(board, player, move, score, cnt=None):
 		board.board[i][j] = '.' # do
 		retrograde(board, 'X' if player == 'O' else 'O', (i, j), score, cnt)
 		board.board[i][j] = tmp # undo
+
 		
 def threadFxn(boards, start):
 	"""Wrapper for retrograde() for threads
 
 	:param start: starting index for calling retrograde w/ boards
 	"""
-	for i in range(start, start + 13):
+	for i in range(start, start + 86):
 		if i >= len(boards):
 			return
 
@@ -140,7 +142,7 @@ if __name__ == '__main__':
 
 	# create threads
 	threads = []
-	for i in range(0, len(boards), 13):
+	for i in range(0, len(boards), 86):
 		threads.append(td.Thread(target=threadFxn, args=(boards, i)))
 
 	for thread in threads:
