@@ -62,9 +62,8 @@ class Play:
 				self.board.move("O", move)
 				print(f"Bot Move: {self.getBoardPos(move)}")	
 				self.board.print()
-
 		else:
-			for _ in range(8):
+			for m in range(8):
 				(score, move) = self.board.negamax("X", depth=4 if m < 4 else None)
 				self.board.move("X", move)
 				print(f"Bot Move: {self.getBoardPos(move)}")
