@@ -39,7 +39,7 @@ If it's X's turn:
 If it's O's turn:
 	score = scoreO - scoreX
 ```
-In its current state is runs slowly (approximately 20 minues) and generates an incorrect answer, 
+In its current state is runs slowly (approximately 9 minutes) and generates an incorrect answer, 
 though it does get through all of the states. Rather than using the database, it currently 
 dumps the output into a JSON file for faster spot checking.
 

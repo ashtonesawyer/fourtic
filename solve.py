@@ -2,7 +2,6 @@
 
 import json
 import sqlite3 as sql
-import threading as td
 from itertools import combinations
 from fourtic import Board
 
@@ -81,10 +80,6 @@ def retrograde(board, player, move, score, cnt=None):
 	'''
 	rep = board.stringify()
 	
-	lock = td.Lock()
-	lock.acquire()
-	if not lock.locked():
-		print("Error: Lock not acquired")
 	if rep in ttable:
 		(m, s) = ttable[rep]
 		if score > s:
@@ -105,7 +100,6 @@ def retrograde(board, player, move, score, cnt=None):
 		'''
 	else:
 		ttable[rep] = (move, score)
-	lock.release()
 
 
 	if cnt is not None:
@@ -146,16 +140,10 @@ if __name__ == '__main__':
 	for state in states:
 		boards.append(Board(b=state))	
 
-	# create threads
-	threads = []
-	for i in range(0, len(boards), 86):
-		threads.append(td.Thread(target=threadFxn, args=(boards, i)))
-
-	for thread in threads:
-		thread.start()
-
-	for thread in threads:
-		thread.join()
+	# start analysis
+	for i in range(len(boards)):
+		score = boards[i].score('X') - boards[i].score('O')
+		retrograde(boards[i], 'O', None, score)
 
 	# temporary for faster checking
 	jsonObj = json.dumps(ttable, indent=2)
