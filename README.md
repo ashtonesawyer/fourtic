@@ -29,10 +29,19 @@ to a full search.
 ### Solving - unfinished
 `solve.py` uses retrograde analysis to strongly solve fourtic. The turn table is represented
 by a sqlite3 database in `states.db`. The `solution` table in this database stores the 
-board state, the score where `score = scoreX - scoreO`, and (where applicable) the best move
-to be played. In its current state is runs slowly and generates an incorrect answer, though it 
-does get through all of the states. Rather than using the database, it currently dumps the output
-into a JSON file for faster storage.
+board state, the score, and (where applicable) the best move to be played. 
+The score is stored as a difference between the final scores of player X and player O. 
+
+```
+If it's X's turn:
+	score = scoreX - scoreO
+
+If it's O's turn:
+	score = scoreO - scoreX
+```
+In its current state is runs slowly (approximately 20 minues) and generates an incorrect answer, 
+though it does get through all of the states. Rather than using the database, it currently 
+dumps the output into a JSON file for faster spot checking.
 
 
 ### Example Game

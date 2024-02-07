@@ -87,6 +87,11 @@ def retrograde(board, player, move, score, cnt=None):
 		print("Error: Lock not acquired")
 	if rep in ttable:
 		(m, s) = ttable[rep]
+		if score > s:
+			ttable[rep] = (move, score)
+		else:
+			return
+		'''
 		if player == 'O':
 			if score > s:
 				ttable[rep] = (move, score)
@@ -97,6 +102,7 @@ def retrograde(board, player, move, score, cnt=None):
 				ttable[rep] = (move, score)
 			else:
 				return
+		'''
 	else:
 		ttable[rep] = (move, score)
 	lock.release()
@@ -115,7 +121,7 @@ def retrograde(board, player, move, score, cnt=None):
 		(i, j) = move
 		tmp = board.board[i][j]
 		board.board[i][j] = '.' # do
-		retrograde(board, 'X' if player == 'O' else 'O', (i, j), score, cnt)
+		retrograde(board, 'X' if player == 'O' else 'O', (i, j), -score, cnt)
 		board.board[i][j] = tmp # undo
 
 		
